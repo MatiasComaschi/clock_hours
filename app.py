@@ -6,7 +6,7 @@ from flask import redirect, url_for, Flask, render_template, request
 
 app = Flask(__name__)
 # app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
-app.config['MONGO_URI'] = "mongodb+srv://tnkchaseme:Collin611194@cluster0.q5bm7.mongodb.net/myFirstDatabase?retryWrites=False"
+app.config['MONGO_URI'] = "mongodb+srv://tnkchaseme:Collin611194@cluster0.q5bm7.mongodb.net/myFirstDatabase?retryWrites=false"
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
