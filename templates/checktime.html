@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{ url_for('check_in') }}" method="post">
+        <div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  <select class="form-select" id="inputGroupSelect01" name="name">
+    <option selected>Choose Employee</option>
+    <option value="Melvin">Melvin</option>
+    <option value="Dee">Dee</option>
+    <option value="Nguyen">Nguyen</option>
+    <option value="Dung">Dung</option>
+    <option value="Duong">Duong</option>
+    <option value="Thanh">Thanh</option>
+  </select>
+        </div>
+  <button type="submit" class="btn btn-danger" name="IN">Clock in</button>
+  <button type="submit" class="btn btn-success" name="OUT">Clock out</button>
+  <button type="submit" class="btn btn-info" name="INFO">Check info</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ user }} have successfully check in at {{ time }}
+<a href="{{ url_for('check_time') }}">Go Back</a>
+{% endblock %}

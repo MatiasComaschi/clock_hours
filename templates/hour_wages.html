@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+ <h3> Employee name: {{ name }} </h3>
+ {% set array1=[] %}
+    <a href="{{ url_for('check_time') }}">Go back</a>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Clock in</th>
+      <th scope="col">Clock out</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in datas %}
+        {% set total = ((data['clock_out']['number_format']|float)-(data['clock_in']['number_format']|float))*24 %}
+        {% if array1.append(total) %}{% endif %}
+    <tr>
+      <th scope="row">{{ data['Date'] }}</th>
+      <td>{{ data['clock_in']['hour'] }}</td>
+      <td>{{ data['clock_out']['hour'] }}</td>
+      <td>{{'%0.2f' % total|float}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    <h4>Total hour:{{array1|total_hours_calc}}</h4>
+{% endblock %}
