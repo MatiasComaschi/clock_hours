@@ -1,3 +1,5 @@
+import os
+
 from flask_bootstrap import Bootstrap
 from datetime import datetime
 from openpyxl import Workbook
@@ -5,8 +7,7 @@ from flask_pymongo import PyMongo
 from flask import redirect, url_for, request, Flask, render_template, request
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = "mongodb+srv://tnkchaseme:Collin611194@cluster0.q5bm7.mongodb.net/myFirstDatabase" \
-                          "?retryWrites=true"
+app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
