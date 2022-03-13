@@ -14,7 +14,6 @@ Bootstrap(app)
 def total_hours(x):
     total = 0
     for data in x:
-        # total += float(data['clock_out']['number_format']) - float(data['clock_in']['number_format'])
         total += data
     return round(total, 3)
 
@@ -43,7 +42,11 @@ def check_in():
                  'clock_in': {"hour": time_of_day,
                               "number_format": str(round((float(
                                   time_of_day[0:2]) / 24 + float(
-                                  time_of_day[3:5]) / 1440), 2))}, 'clock_out': 0, 'total_hours': 0})
+                                  time_of_day[3:5]) / 1440), 2))},
+                 'clock_out': {
+                     "hour": '0',
+                     "number_format": '0'
+                 }})
         elif 'OUT' in request.form:
             db.clockhours.find_one_and_update({'_id': current_time + " " + user},
                                               {"$set":

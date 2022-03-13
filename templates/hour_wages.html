@@ -15,13 +15,13 @@
   <tbody>
     {% for data in datas %}
         {% set total = ((data['clock_out']['number_format']|float)-(data['clock_in']['number_format']|float))*24 %}
-        {% if array1.append(total) %}{% endif %}
     <tr>
       <th scope="row">{{ data['Date'] }}</th>
       <td>{{ data['clock_in']['hour'] }}</td>
       <td>{{ data['clock_out']['hour'] }}</td>
       <td>{{'%0.2f' % total|float}}</td>
     </tr>
+        {% if array1.append(total) %}{% endif %}
     {% endfor %}
   </tbody>
 </table>
