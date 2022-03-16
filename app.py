@@ -12,7 +12,7 @@ Bootstrap(app)
 
 
 def utc_to_local(utc_dt):
-    return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    return str(utc_dt)
 
 
 app.jinja_env.filters['local_time'] = utc_to_local
