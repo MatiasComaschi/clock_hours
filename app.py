@@ -3,20 +3,11 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
-
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
-
-
-def utc_to_local(utc_dt):
-    return str(utc_dt)
-
-
-app.jinja_env.filters['local_time'] = utc_to_local
-
 
 def total_hours(x):
     total = 0
@@ -30,7 +21,6 @@ app.jinja_env.filters['total_hours_calc'] = total_hours
 
 @app.route('/')
 def check_time():  # put application's code here
-    # wb.save(filename=dest_filename)
     return render_template('checktime.html')
 
 
@@ -47,10 +37,6 @@ def check_in():
                 {'_id': current_time + " " + user, 'Date': current_time,
                  'Employee_Name': user,
                  'clock_in': {"hour_UTC": time_of_day,
-                              # "number_format": str(round((float(
-                              #     time_of_day[0:2]) / 24 + float(
-                              #     time_of_day[3:5]) / 1440), 2)),
-                              "offset": now.getTimezoneOffset()
                               },
                  'clock_out': {
                      "hour_UTC": '0',
@@ -64,7 +50,6 @@ def check_in():
                                                          # "number_format": str(round((float(
                                                          #     time_of_day[0:2]) / 24 + float(
                                                          #     time_of_day[3:5]) / 1440), 2)),
-                                                         "offset": now.getTimezoneOffset()
                                                          }
                                                     }
                                                }
