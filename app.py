@@ -5,11 +5,12 @@ from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
 from zoneinfo import ZoneInfo
 app = Flask(__name__)
-print(datetime.now())
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
+
+
 def total_hours(x):
     total = 0
     for data in x:
