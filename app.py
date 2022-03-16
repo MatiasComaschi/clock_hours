@@ -3,11 +3,19 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
+
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
+
+
+def utc_to_local(utc_dt):
+    return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+
+
+app.jinja_env.filters['local_time'] = utc_to_local
 
 
 def total_hours(x):
