@@ -5,20 +5,28 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
+
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
+# app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
+app.config[
+    'MONGO_URI'] = 'mongodb+srv://tnkchaseme:Collin611194@cluster0.q5bm7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
 
-def total_hours(x):
-    total = 0
-    for data in x:
-        total += data
-    return round(total, 3)
+
+def hour_beautify(x):
+    return x.strftime('%H:%M:%S')
 
 
-app.jinja_env.filters['total_hours_calc'] = total_hours
+app.jinja_env.filters['hour_convert'] = hour_beautify
+
+
+def date_beautify(x):
+    return x.strftime("%A %d/%m/%Y")
+
+
+app.jinja_env.filters['date_convert'] = date_beautify
 
 
 @app.route('/')
@@ -38,17 +46,17 @@ def check_in():
             db.clockhours.insert_one(
                 {'_id': current_time + " " + user, 'Date': current_time,
                  'Employee_Name': user,
-                 'clock_in': {"hour_UTC": now, "offset": str(now-datetime.now())
+                 'clock_in': {"hour_UTC": now, "offset": str(now - datetime.now())
                               },
                  'clock_out': {
                      "hour_UTC": '0',
-                     "offset": str(now-datetime.now())
+                     "offset": str(now - datetime.now())
                  }})
         elif 'OUT' in request.form:
             db.clockhours.find_one_and_update({'_id': current_time + " " + user},
                                               {"$set":
                                                    {"clock_out":
-                                                        {"hour_UTC": now, "offset": str(now-datetime.now())
+                                                        {"hour_UTC": now, "offset": str(now - datetime.now())
                                                          # "number_format": str(round((float(
                                                          #     time_of_day[0:2]) / 24 + float(
                                                          #     time_of_day[3:5]) / 1440), 2)),
@@ -66,7 +74,7 @@ def check_in():
 def show_hours(name):
     user = name
     data = db.clockhours.find({'Employee_Name': user})
-    return render_template('hour_wages.html', name=user, datas=data)
+    return render_template('hour_wages.html', name=user, datas=data, offset=datetime.utcnow() - datetime.now())
 
 
 if __name__ == '__main__':
