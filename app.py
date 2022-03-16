@@ -1,9 +1,11 @@
 import os
 from flask_bootstrap import Bootstrap
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
+from zoneinfo import ZoneInfo
 app = Flask(__name__)
+print(datetime.now())
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
