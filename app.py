@@ -33,8 +33,8 @@ def check_time():  # put application's code here
 def check_in():
     user = request.form['name']
     # now = time.localtime()
-    current_time = time.strftime("%A %d/%m/%Y")
-    time_of_day = time.strftime('%H:%M:%S')
+    current_time = str(time.strftime("%A %d/%m/%Y"))
+    time_of_day = str(time.strftime('%H:%M:%S'))
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
