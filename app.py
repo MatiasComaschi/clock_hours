@@ -3,14 +3,11 @@ from flask_bootstrap import Bootstrap
 from datetime import datetime
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
-
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
-
-
 def total_hours(x):
     total = 0
     for data in x:
@@ -31,7 +28,7 @@ def check_time():  # put application's code here
 @app.route('/checkin', methods=['POST', 'GET'])
 def check_in():
     user = request.form['name']
-    now = datetime.now()
+    now = datetime.today()
     current_time = now.strftime("%A %d/%m/%Y")
     time_of_day = now.strftime('%H:%M:%S')
     if request.method == 'POST':
