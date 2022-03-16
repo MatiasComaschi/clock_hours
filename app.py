@@ -67,7 +67,7 @@ def check_in():
                                               )
         elif 'INFO' in request.form:
             return redirect(url_for('show_hours', name=user))
-    return render_template('success.html', user=user, time=current_time)
+    return render_template('success.html', user=user, time=datetime.utcnow())
 
 
 # this is will read data from mongo db
