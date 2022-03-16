@@ -1,6 +1,7 @@
 import os
 from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
+import time
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
 from zoneinfo import ZoneInfo
@@ -31,9 +32,9 @@ def check_time():  # put application's code here
 @app.route('/checkin', methods=['POST', 'GET'])
 def check_in():
     user = request.form['name']
-    now = datetime.now()
-    current_time = now.strftime("%A %d/%m/%Y")
-    time_of_day = now.strftime('%H:%M:%S')
+    # now = time.localtime()
+    current_time = time.strftime("%A %d/%m/%Y")
+    time_of_day = time.strftime('%H:%M:%S')
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
