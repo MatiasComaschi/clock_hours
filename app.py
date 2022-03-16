@@ -46,22 +46,26 @@ def check_in():
             db.clockhours.insert_one(
                 {'_id': current_time + " " + user, 'Date': current_time,
                  'Employee_Name': user,
-                 'clock_in': {"hour": time_of_day,
-                              "number_format": str(round((float(
-                                  time_of_day[0:2]) / 24 + float(
-                                  time_of_day[3:5]) / 1440), 2))},
+                 'clock_in': {"hour_UTC": time_of_day,
+                              # "number_format": str(round((float(
+                              #     time_of_day[0:2]) / 24 + float(
+                              #     time_of_day[3:5]) / 1440), 2)),
+                              "offset": now.getTimezoneOffset()
+                              },
                  'clock_out': {
-                     "hour": '0',
-                     "number_format": '0'
+                     "hour_UTC": '0',
+                     # "number_format": '0'
                  }})
         elif 'OUT' in request.form:
             db.clockhours.find_one_and_update({'_id': current_time + " " + user},
                                               {"$set":
                                                    {"clock_out":
-                                                        {"hour": time_of_day,
-                                                         "number_format": str(round((float(
-                                                             time_of_day[0:2]) / 24 + float(
-                                                             time_of_day[3:5]) / 1440), 2))}
+                                                        {"hour_UTC": time_of_day,
+                                                         # "number_format": str(round((float(
+                                                         #     time_of_day[0:2]) / 24 + float(
+                                                         #     time_of_day[3:5]) / 1440), 2)),
+                                                         "offset": now.getTimezoneOffset()
+                                                         }
                                                     }
                                                }
                                               )
