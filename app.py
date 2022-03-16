@@ -1,4 +1,6 @@
 import os
+import time
+
 from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
 from flask_pymongo import PyMongo
@@ -36,7 +38,7 @@ def check_in():
             db.clockhours.insert_one(
                 {'_id': current_time + " " + user, 'Date': current_time,
                  'Employee_Name': user,
-                 'clock_in': {"hour_UTC": time_of_day,
+                 'clock_in': {"hour_UTC": time_of_day, "local_time": time.localtime()
                               },
                  'clock_out': {
                      "hour_UTC": '0',
@@ -50,6 +52,7 @@ def check_in():
                                                          # "number_format": str(round((float(
                                                          #     time_of_day[0:2]) / 24 + float(
                                                          #     time_of_day[3:5]) / 1440), 2)),
+                                                         "local_time": time.localtime()
                                                          }
                                                     }
                                                }
