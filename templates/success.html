@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p id="hours"> </p>
+    <p id="hours">{{ user }} has successfully check at'</p>
 <a href="{{ url_for('check_time') }}">Go Back</a>
     <script>
     const d = new Date()
     let diff = d.getTimezoneOffset();
-    document.getElementById("hours").innerHTML ={{ user }} +'has successfully check at' +  Date(d-diff*60000);
+    document.getElementById("hours").innerHTML += Date(d-diff*60000);
     </script>
 {% endblock %}
