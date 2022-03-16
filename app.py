@@ -30,7 +30,7 @@ def check_time():  # put application's code here
 @app.route('/checkin', methods=['POST', 'GET'])
 def check_in():
     user = request.form['name']
-    now = datetime.today()
+    now = datetime.now()
     current_time = now.strftime("%A %d/%m/%Y")
     time_of_day = now.strftime('%H:%M:%S')
     if request.method == 'POST':
