@@ -1,10 +1,8 @@
 import os
 from flask_bootstrap import Bootstrap
 from datetime import datetime, timedelta, timezone
-import time
 from flask_pymongo import PyMongo
 from flask import redirect, url_for, Flask, render_template, request
-from zoneinfo import ZoneInfo
 app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
@@ -32,9 +30,9 @@ def check_time():  # put application's code here
 @app.route('/checkin', methods=['POST', 'GET'])
 def check_in():
     user = request.form['name']
-    # now = time.localtime()
-    current_time = str(time.strftime("%A %d/%m/%Y"))
-    time_of_day = str(time.strftime('%H:%M:%S'))
+    now = datetime.utcnow()
+    current_time = now.strftime("%A %d/%m/%Y")
+    time_of_day = now.strftime('%H:%M:%S')
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
