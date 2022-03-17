@@ -38,7 +38,7 @@ def check_time():  # put application's code here
 def check_in():
     user = request.form['name']
     now = datetime.utcnow()
-    current_time = (now - (now-datetime.now())).strftime("%A %m/%D")
+    current_time = (now - (now-datetime.now())).strftime("%A %m/%d")
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
