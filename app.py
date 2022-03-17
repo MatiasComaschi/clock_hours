@@ -39,7 +39,7 @@ def check_in():
     user = request.form['name']
     now = datetime.utcnow()
     current_time = (now - (now - datetime.now())).strftime("%A %m/%d")
-    offset = now - datetime.now()
+    offset = -time.timezone
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
@@ -65,7 +65,7 @@ def check_in():
                                               )
         elif 'INFO' in request.form:
             return redirect(url_for('show_hours', name=user))
-    return render_template('success.html', user=user, time=datetime.utcnow(), offset=offset)
+    return render_template('success.html', user=user, time=datetime.utcnow())
 
 
 # this is will read data from mongo db
@@ -73,7 +73,7 @@ def check_in():
 def show_hours(name):
     user = name
     data = db.clockhours.find({'Employee_Name': user})
-    return render_template('hour_wages.html', name=user, datas=data)
+    return render_template('hour_wages.html', name=user, datas=data, offset=-time.timezone)
 
 
 if __name__ == '__main__':
