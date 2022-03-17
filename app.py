@@ -8,7 +8,7 @@ from flask import redirect, url_for, Flask, render_template, request
 
 app = Flask(__name__)
 #
-app.config['MONGO_URI'] =os.environ.get("MONGODB_URI")
+app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
@@ -38,13 +38,14 @@ def check_time():  # put application's code here
 def check_in():
     user = request.form['name']
     now = datetime.utcnow()
-    current_time = (now - (now-datetime.now())).strftime("%A %m/%d")
+    current_time = (now - (now - datetime.now())).strftime("%A %m/%d")
+    offset = now - datetime.now()
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
                 {'_id': current_time + " " + user, 'Date': current_time,
                  'Employee_Name': user,
-                 'clock_in': {"hour_UTC": now, "offset": now - datetime.now()
+                 'clock_in': {"hour_UTC": now, "offset": offset
                               },
                  'clock_out': {
                      "hour_UTC": '0',
@@ -54,7 +55,7 @@ def check_in():
             db.clockhours.find_one_and_update({'_id': current_time + " " + user},
                                               {"$set":
                                                    {"clock_out":
-                                                        {"hour_UTC": now, "offset": now - datetime.now()
+                                                        {"hour_UTC": now, "offset": offset
                                                          # "number_format": str(round((float(
                                                          #     time_of_day[0:2]) / 24 + float(
                                                          #     time_of_day[3:5]) / 1440), 2)),
@@ -64,7 +65,7 @@ def check_in():
                                               )
         elif 'INFO' in request.form:
             return redirect(url_for('show_hours', name=user))
-    return render_template('success.html', user=user, time=datetime.utcnow(), offset=datetime.utcnow() - datetime.now())
+    return render_template('success.html', user=user, time=datetime.utcnow(), offset=offset)
 
 
 # this is will read data from mongo db
