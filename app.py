@@ -8,7 +8,7 @@ from flask import redirect, url_for, Flask, render_template, request
 
 app = Flask(__name__)
 #
-app.config['MONGO_URI'] = os.environ.get("MONGODB_URI")
+app.config['MONGO_URI'] =os.environ.get("MONGODB_URI")
 mongo = PyMongo(app)
 db = mongo.db
 Bootstrap(app)
@@ -38,7 +38,7 @@ def check_time():  # put application's code here
 def check_in():
     user = request.form['name']
     now = datetime.utcnow()
-    current_time = str(now.strftime("%A %d/%m"))
+    current_time = (now - (now-datetime.now())).strftime("%A %m/%D")
     if request.method == 'POST':
         if 'IN' in request.form:
             db.clockhours.insert_one(
