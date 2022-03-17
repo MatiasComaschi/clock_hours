@@ -14,9 +14,9 @@
   <tbody>
     {% for data in datas %}
     <tr>
-      <th scope="row">{{ (data['clock_in']['hour_UTC']-offset)|date_convert }}</th>
-      <td>{{ (data['clock_in']['hour_UTC']-offset)|hour_convert }}</td>
-      <td>{{ (data['clock_out']['hour_UTC']-offset)|hour_convert }}</td>
+      <th scope="row">{{ (data['clock_out']['hour_UTC']-data['clock_in']['offset'])|date_convert }}</th>
+      <td>{{ (data['clock_in']['hour_UTC']-data['clock_in']['offset'])|hour_convert }}</td>
+      <td>{{ (data['clock_out']['hour_UTC']-data['clock_out']['offset'])|hour_convert }}</td>
     </tr>
 {#        {% if array1.append(total) %}{% endif %}#}
     {% endfor %}

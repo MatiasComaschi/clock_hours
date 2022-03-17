@@ -72,7 +72,7 @@ def check_in():
 def show_hours(name):
     user = name
     data = db.clockhours.find({'Employee_Name': user})
-    return render_template('hour_wages.html', name=user, datas=data, offset=datetime.utcnow() - datetime.now())
+    return render_template('hour_wages.html', name=user, datas=data)
 
 
 if __name__ == '__main__':
